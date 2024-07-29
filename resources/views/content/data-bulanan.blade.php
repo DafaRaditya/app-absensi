@@ -7,7 +7,7 @@
 
     </div>
     <div class="d-flex justify-content-end">
-        <a href="{{ route('export-data') }}" class="btn btn-success me-2">Export to excel</a>
+        <a href="{{ route('export-data', ['bulan' => $bulan])  }}" class="btn btn-success me-2">Export to excel</a>
         <form action="{{ route('absensi.data-bulanan') }}" method="GET" class="d-flex">
             <input type="month" class="form-control me-2" name="bulan" value="{{ $bulan }}">
             <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>

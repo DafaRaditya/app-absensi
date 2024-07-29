@@ -6,6 +6,7 @@ use App\Models\Absensi;
 use App\Models\karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
 {
@@ -35,7 +36,7 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        return view('content.create');
+        return abort(404,'Halaman tidak ditemukan');;
     }
 
     /**
@@ -46,32 +47,42 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        Session::flash('nik', $request->nik);
-        Session::flash('nama', $request->nama);
-        Session::flash('jabatan', $request->jabatan);
-
-        $request->validate([
-            'nik'=> 'required|numeric|unique:karyawan,nik',
-            'nama'=> 'required',
-            'jabatan'=> 'required',
-        ],
-        [
-            'nik.required'=>'Nik Wajib Diisi',
-            'nik.numeric'=>'Nik Wajib angka',
-            'nik.unique'=>'Nik Sudah Dipakai ',
-            'nama.required'=>'Nama Wajib Diisi',
-            'jabatan.required'=>'Jabatan Wajib Diisi',
-        ]
-    );
-
+        // Validasi data
+        $validator = Validator::make($request->all(), [
+            'nik' => 'required|numeric|unique:karyawan,nik',
+            'nama' => 'required',
+            'jabatan' => 'required',
+        ], [
+            'nik.required' => 'Nik Wajib Diisi',
+            'nik.numeric' => 'Nik Wajib angka',
+            'nik.unique' => 'Nik Sudah Dipakai',
+            'nama.required' => 'Nama Wajib Diisi',
+            'jabatan.required' => 'Jabatan Wajib Diisi',
+        ]);
+    
+        // Jika validasi gagal
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 422); 
+        }
+    
+        // Jika validasi sukses
         $data = [
-            'nik'=>$request->nik,
-            'nama'=>$request->nama,
-            'jabatan'=>$request->jabatan,
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'jabatan' => $request->jabatan,
         ];
+    
         karyawan::create($data);
-        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil disimpan.');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Data karyawan berhasil disimpan.',
+        ]);
     }
+    
 
     /**
      * Display the specified resource.

@@ -35,8 +35,11 @@ Route::prefix('admin')->group(function () {
 
     // data absen
     Route::get('data', [AbsensiController::class, 'index'])->name('absensi.index')->middleware('auth');
+
+
     // pencarian data absen
-    Route::post('data/search' , [AbsensiController::class , 'search'])->name('absensi.search')->middleware('auth');
+    // Route::get('data/search' , [AbsensiController::class , 'search'])->name('absensi.search')->middleware('auth');
+    
     Route::get('data-bulanan', [AbsensiController::class, 'dataBulanan'])->name('absensi.data-bulanan')->middleware('auth');
     
     // export data absensi

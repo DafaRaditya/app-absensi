@@ -14,22 +14,18 @@ class AbsensiController extends Controller
 {
     public function index(Request $request) 
     {
-        $tanggalHariIni = Carbon::now()->toDateString();
-        $absensi = Absensi::where('tanggal', $tanggalHariIni)->get();
-
-        return view('content.data', compact('absensi'));
+        //  ambil data tanggal dari inputan dengan name tanggalAbsen
+        $tanggal = $request->input('tanggalAbsen', Carbon::now()->toDateString());
+    
+        // Ambil data absensi berdasarkan tanggal
+        $absensi = Absensi::where('tanggal', $tanggal)->get();
+    
+        return view('content.data', compact('absensi', 'tanggal'));
 
         
 
 }
-    // fungsi pencarian berdasarkan tanngal
-    public function search(Request $request)
-    {
-        $tanggal = $request->tanggalAbsen;
-        $absensi = Absensi::where('tanggal', $tanggal)->get();
-
-        return view('content.data', compact('absensi'));
-    }
+   
 
     // fungsi yg menampilkan data  untuk absensi bulanan dari db
     public function dataBulanan(Request $request)
@@ -47,6 +43,7 @@ class AbsensiController extends Controller
         // variabel yg isinya inputan dgn name bulan yang terdapat value year-month,atau nilai defaultnya year-month saat program dijalankan
         $bulan = $request->input('bulan', Carbon::now()->format('Y-m'));
 
+        // mengambil data absensi berdasarkan bulan dan tahun yang diinputkan
         return Excel::download(new AbsensiExport($bulan), 'Absensi-' . $bulan . '.xlsx');
     }
 

@@ -25,5 +25,5 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'absensi.index';
+    protected $redirectTo = 'karyawan.index';
 }

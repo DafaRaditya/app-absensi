@@ -12,6 +12,12 @@
     {{-- Sweet Alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+
+    {{-- ajax & axios --}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -32,62 +38,41 @@
               <span class="fs-4">{{ config('app.name', 'Laravel') }}</span>
             </a>
             <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
+            <ul class="nav nav-pills  flex-column mb-auto">
               <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
+                <a href="{{ route('karyawan.index') }}" class="nav-link {{ Request::routeIs('karyawan.index') ? 'active ' : 'link-body-emphasis' }} " aria-current="page">
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
                   Home
                 </a>
               </li>
               <li>
-                <a href="{{ route('absensi.index') }}" class="nav-link link-body-emphasis">
+                <a href="{{ route("absensi.index") }}" class="nav-link {{ Request::routeIs('absensi.index') ? 'active' : 'link-body-emphasis' }}
+                "
+                aria-current="page"
+                >
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
                   Data Absen
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-link link-body-emphasis">
+                <a href="{{ route('absensi.data-bulanan') }}" class="nav-link {{ Request::routeIs('absensi.data-bulanan') ? 'active' : 'link-body-emphasis' }} "
+                aria-current="page"
+                >
                   <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-                  Orders
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-                  Products
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link link-body-emphasis">
-                  <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-                  Customers
+                  Data Bulanan
                 </a>
               </li>
             </ul>
             <hr>
-            <div class="dropdown">
-              <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
-              </a>
-              <ul class="dropdown-menu text-small shadow">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-              </ul>
-            </div>
           </div>
         @endauth
         {{-- end of sidebar --}}
 
+        {{-- content --}}
         <div class="w-full">
             <header class="navbar navbar-expand-md navbar-light ">
                 <div class="container">
-                    {{-- <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a> --}}
+                   
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -96,14 +81,7 @@
                         <ul class="navbar-nav ms-auto">
                             @guest
                             @else
-                            {{-- <ul class="navbar-nav me-auto">
-                                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('absensi.index') }}">Data Absen</a>
-                                </li>
-                                <li class="nav-item {{ Request::is('admin/karyawan') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ url('admin/karyawan') }}">Data Karyawan</a>
-                                </li>
-                            </ul>  --}}
+                          
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }}
@@ -134,6 +112,6 @@
         </div>
     </div>
 
-    
+<script src="{{ asset('js/karyawan.js') }}"></script>
 </body>
 </html>
