@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\AbsensiExport;
 use Carbon\Carbon;
 use App\Models\Absensi;
-use App\Models\karyawan;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 // package maat website
 use Maatwebsite\Excel\Facades\Excel;
